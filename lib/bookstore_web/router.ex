@@ -76,5 +76,12 @@ defmodule BookstoreWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
+
+    live "/books", BookLive.Index, :index
+    live "/books/new", BookLive.Index, :new
+    live "/books/:id/edit", BookLive.Index, :edit
+
+    live "/books/:id", BookLive.Show, :show
+    live "/books/:id/show/edit", BookLive.Show, :edit
   end
 end
