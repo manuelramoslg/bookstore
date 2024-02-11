@@ -9,6 +9,7 @@ defmodule Bookstore.Books.Book do
     field :price, :float
     field :quantity, :integer
     field :editorial, :string
+    field :image, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -16,7 +17,7 @@ defmodule Bookstore.Books.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :isbn, :publication_date, :price, :quantity, :editorial])
-    |> validate_required([:title, :isbn, :publication_date, :price, :quantity, :editorial])
+    |> cast(attrs, [:title, :isbn, :publication_date, :price, :quantity, :editorial, :image])
+    |> validate_required([:title, :isbn, :publication_date, :price, :quantity, :editorial, :image])
   end
 end
