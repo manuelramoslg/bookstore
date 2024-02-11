@@ -19,7 +19,7 @@
   <:col :let={{_id, book}} label="Quantity"><%= book.quantity %></:col>
   <:col :let={{_id, book}} label="Editorial"><%= book.editorial %></:col>
   <:col :let={{_id, book}} label="Image">
-    <img src={book.image} alt="Profile Image" style="width: 6rem; height: 6rem; object-fit: cover;"/>
+    <img src={book.image} alt="Profile Image" style="object-fit: contain;"/>
   </:col>
   <:action :let={{_id, book}}>
     <div class="sr-only">
