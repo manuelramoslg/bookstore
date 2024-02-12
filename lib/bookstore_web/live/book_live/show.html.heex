@@ -9,6 +9,9 @@
 </.header>
 
 <.list>
+  <:item title="Image">
+    <img src={@book.image} alt="Profile Image" style="object-fit: contain;"/>
+  </:item>
   <:item title="Title"><%= @book.title %></:item>
   <:item title="Isbn"><%= @book.isbn %></:item>
   <:item title="Publication date"><%= @book.publication_date %></:item>

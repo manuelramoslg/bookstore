@@ -21,6 +21,12 @@ defmodule Bookstore.Books do
     Repo.all(Book)
   end
 
+  def list_books(limit, offset) do
+    query = from(p in Book, limit: ^limit, offset: ^offset)
+    Repo.all(query)
+  end
+
+
   @doc """
   Gets a single book.
 

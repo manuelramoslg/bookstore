@@ -474,6 +474,7 @@ defmodule BookstoreWeb.CoreComponents do
       end
 
     ~H"""
+
     <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
       <table class="w-[40rem] mt-11 sm:w-full">
         <thead class="text-sm text-left leading-6 text-zinc-500">
@@ -487,6 +488,7 @@ defmodule BookstoreWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
+          phx-viewport-bottom={"next-page"}
           class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
         >
           <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
@@ -517,6 +519,7 @@ defmodule BookstoreWeb.CoreComponents do
         </tbody>
       </table>
     </div>
+    <div class="py-1 text-center animate-pulse" id="next-page">_</div>
     """
   end
 
