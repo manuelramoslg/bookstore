@@ -6,7 +6,11 @@ defmodule BookstoreWeb.BookLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :books, Books.list_books())}
+    {:ok,
+    socket
+    |> assign(page: 1, per_page: 3)
+    |> paginate_books(1)
+  }
   end
 
   @impl true
@@ -37,11 +41,30 @@ defmodule BookstoreWeb.BookLive.Index do
     {:noreply, stream_insert(socket, :books, book)}
   end
 
+  defp paginate_books(socket, new_page) when new_page >= 1 do
+    %{per_page: per_page, page: cur_page} = socket.assigns
+    books = Books.list_books(per_page, (new_page - 1) * per_page)
+
+    {books, at} =
+      if new_page >= cur_page do
+        {books, -1}
+      end
+
+    socket
+    |> assign(:page, new_page)
+    |> stream(:books, books, at: at)
+  end
+
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     book = Books.get_book!(id)
     {:ok, _} = Books.delete_book(book)
 
     {:noreply, stream_delete(socket, :books, book)}
+  end
+
+  @impl true
+  def handle_event("next-page", _, socket) do
+    {:noreply, paginate_books(socket, socket.assigns.page + 1)}
   end
 end
