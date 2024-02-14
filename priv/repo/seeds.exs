@@ -198,3 +198,6 @@ book_data = [
 Enum.each(book_data, fn(data) ->
   Books.create_book(data)
 end)
+
+alias Bookstore.Categories
+Categories.create_category(%{name: "Sin Categoria"})
