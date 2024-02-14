@@ -77,10 +77,6 @@ defmodule BookstoreWeb.BookLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", _params, socket) do
-    {:noreply, socket}
-  end
-
   def handle_event("validate", %{"book" => book_params}, socket) do
     changeset =
       socket.assigns.book
@@ -110,25 +106,6 @@ defmodule BookstoreWeb.BookLive.FormComponent do
 
   def handle_event("cancel-upload", %{"ref" => ref}, socket) do
     {:noreply, cancel_upload(socket, :image, ref)}
-  end
-
-  def handle_event("save", %{"book" => book_params}, socket) do
-    save_book(socket, socket.assigns.action, book_params)
-  end
-
-  defp save_book(socket, :edit, book_params) do
-    case Books.update_book(socket.assigns.book, book_params) do
-      {:ok, book} ->
-        notify_parent({:saved, book})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Book updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
   end
 
   defp save_book(socket, :new, book_params) do
