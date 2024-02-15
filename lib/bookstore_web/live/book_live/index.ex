@@ -3,12 +3,15 @@ defmodule BookstoreWeb.BookLive.Index do
 
   alias Bookstore.Books
   alias Bookstore.Books.Book
+  alias Bookstore.Authors
 
   @impl true
   def mount(_params, _session, socket) do
+    authors = Authors.list_authors()
     {:ok,
     socket
     |> assign(page: 1, per_page: 3)
+    |> assign(authors: authors)
     |> paginate_books(1)
   }
   end

@@ -2,6 +2,9 @@ defmodule Bookstore.Books.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bookstore.Authors.Author
+  alias Bookstore.AuthorBooks.AuthorBook
+
   schema "books" do
     field :title, :string
     field :isbn, :string
@@ -11,6 +14,7 @@ defmodule Bookstore.Books.Book do
     field :editorial, :string
     field :image, :string
 
+    many_to_many :authors, Author, join_through: AuthorBook
     timestamps(type: :utc_datetime)
   end
 

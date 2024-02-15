@@ -18,7 +18,8 @@ defmodule Bookstore.Books do
 
   """
   def list_books do
-    Repo.all(Book)
+    query = from p in Book, preload: [:authors]
+    Repo.all(query)
   end
 
   def list_books(limit, offset) do
@@ -105,6 +106,8 @@ defmodule Bookstore.Books do
 
   """
   def change_book(%Book{} = book, attrs \\ %{}) do
-    Book.changeset(book, attrs)
+    book
+    |> Repo.preload([:authors])
+    |> Book.changeset(attrs)
   end
 end

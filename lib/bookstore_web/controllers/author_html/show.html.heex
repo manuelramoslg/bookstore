@@ -1,0 +1,17 @@
+<.header>
+  Author <%= @author.id %>
+  <:subtitle>This is a author record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/authors/#{@author}/edit"}>
+      <.button>Edit author</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Full name"><%= @author.full_name %></:item>
+  <:item title="Birthday"><%= @author.birthday %></:item>
+  <:item title="Nationality"><%= @author.nationality %></:item>
+</.list>
+
+<.back navigate={~p"/authors"}>Back to authors</.back>

@@ -201,3 +201,12 @@ end)
 
 alias Bookstore.Categories
 Categories.create_category(%{name: "Sin Categoria"})
+
+alias Bookstore.Authors
+Authors.create_author(
+  %{
+    full_name: "Manuel Ramos La Gambino",
+    birthday: ~D[2024-02-13],
+    nationality: "Venezolano",
+  }
+)
