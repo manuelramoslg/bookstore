@@ -26,10 +26,10 @@ defmodule BookstoreWeb.BookLive.FormComponent do
         <.input field={@form[:quantity]} type="number" label="Quantity" />
         <.input field={@form[:editorial]} type="text" label="Editorial" />
         <.input
-          field={@form[:authors]}
+          field={@form[:author_ids]}
           type="select"
-          multiple
           label="Author"
+          multiple
           options={@authors |> Enum.map(&{&1.full_name, &1.id})}
         />
         <.live_file_input upload={@uploads.image } />
@@ -121,8 +121,8 @@ defmodule BookstoreWeb.BookLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Book created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> push_patch(to: socket.assigns.patch)
+         |> put_flash(:info, "Book created successfully")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

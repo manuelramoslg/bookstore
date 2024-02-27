@@ -7,6 +7,7 @@ defmodule Bookstore.Books do
   alias Bookstore.Repo
 
   alias Bookstore.Books.Book
+  alias Bookstore.Authors.Author
 
   @doc """
   Returns the list of books.
@@ -42,7 +43,9 @@ defmodule Bookstore.Books do
       ** (Ecto.NoResultsError)
 
   """
-  def get_book!(id), do: Repo.get!(Book, id)
+  def get_book!(id) do
+    Book |> Repo.get!(id) |> Repo.preload(:authors)
+  end
 
   @doc """
   Creates a book.
@@ -58,7 +61,7 @@ defmodule Bookstore.Books do
   """
   def create_book(attrs \\ %{}) do
     %Book{}
-    |> Book.changeset(attrs)
+    |> change_book(attrs)
     |> Repo.insert()
   end
 
@@ -67,16 +70,16 @@ defmodule Bookstore.Books do
 
   ## Examples
 
-      iex> update_book(book, %{field: new_value})
       {:ok, %Book{}}
 
+      iex> update_book(book, %{field: new_value})
       iex> update_book(book, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
   def update_book(%Book{} = book, attrs) do
     book
-    |> Book.changeset(attrs)
+    |> change_book(attrs)
     |> Repo.update()
   end
 
@@ -106,8 +109,16 @@ defmodule Bookstore.Books do
 
   """
   def change_book(%Book{} = book, attrs \\ %{}) do
+    authors = list_authors_by_id(attrs["author_ids"])
+
     book
     |> Repo.preload([:authors])
     |> Book.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:authors, authors)
+  end
+
+  def list_authors_by_id(nil), do: []
+  def list_authors_by_id(author_ids) do
+    Repo.all(from a in Author, where: a.id in ^author_ids)
   end
 end

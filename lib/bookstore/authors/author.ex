@@ -3,14 +3,14 @@ defmodule Bookstore.Authors.Author do
   import Ecto.Changeset
 
   alias Bookstore.Books.Book
-  alias Bookstore.AuthorBooks
+  alias Bookstore.AuthorBooks.AuthorBook
 
   schema "authors" do
     field :full_name, :string
     field :birthday, :date
     field :nationality, :string
 
-    many_to_many :books, Book, join_through: AuthorBooks
+    many_to_many :books, Book, join_through: AuthorBook
     timestamps(type: :utc_datetime)
   end
 
