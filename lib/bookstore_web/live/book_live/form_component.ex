@@ -25,9 +25,15 @@ defmodule BookstoreWeb.BookLive.FormComponent do
         <.input field={@form[:price]} type="number" label="Price" step="any" />
         <.input field={@form[:quantity]} type="number" label="Quantity" />
         <.input field={@form[:editorial]} type="text" label="Editorial" />
+        <.input
+          field={@form[:author_ids]}
+          type="select"
+          label="Author"
+          multiple
+          options={@authors |> Enum.map(&{&1.full_name, &1.id})}
+        />
         <.live_file_input upload={@uploads.image } />
         <section phx-drop-target={@uploads.image.ref}>
-
           <%= for entry <- @uploads.image.entries do %>
             <article class="upload-entry">
 
@@ -115,8 +121,8 @@ defmodule BookstoreWeb.BookLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Book created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> push_patch(to: socket.assigns.patch)
+         |> put_flash(:info, "Book created successfully")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

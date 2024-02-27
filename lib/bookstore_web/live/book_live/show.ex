@@ -2,10 +2,16 @@ defmodule BookstoreWeb.BookLive.Show do
   use BookstoreWeb, :live_view
 
   alias Bookstore.Books
+  alias Bookstore.Authors
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    authors = Authors.list_authors()
+
+    {:ok,
+      socket
+      |> assign(authors: authors)
+    }
   end
 
   @impl true
