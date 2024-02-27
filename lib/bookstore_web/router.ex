@@ -21,6 +21,7 @@ defmodule BookstoreWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/books/csv", CsvController, :export
     resources "/authors", AuthorController
     resources "/categories", CategoryController
   end
