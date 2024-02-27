@@ -10,7 +10,7 @@ defmodule Bookstore.Authors.Author do
     field :birthday, :date
     field :nationality, :string
 
-    many_to_many :books, Book, join_through: AuthorBook
+    many_to_many :books, Book, join_through: AuthorBook, on_replace: :delete
     timestamps(type: :utc_datetime)
   end
 

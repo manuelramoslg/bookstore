@@ -129,6 +129,21 @@ defmodule BookstoreWeb.BookLive.FormComponent do
     end
   end
 
+  defp save_book(socket, :edit, book_params) do
+    case Books.update_book(socket.assigns.book, book_params) do
+      {:ok, _book} ->
+        {:noreply,
+         socket
+         |> push_patch(to: socket.assigns.patch)
+         |> put_flash(:info, "Book updated successfully")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        changeset = Map.put(changeset, :action, :edit)
+
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end

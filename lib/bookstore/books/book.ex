@@ -14,7 +14,7 @@ defmodule Bookstore.Books.Book do
     field :editorial, :string
     field :image, :string
 
-    many_to_many :authors, Author, join_through: AuthorBook
+    many_to_many :authors, Author, join_through: AuthorBook,  on_replace: :delete
     timestamps(type: :utc_datetime)
   end
 
