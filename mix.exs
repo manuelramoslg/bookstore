@@ -62,7 +62,8 @@ defmodule Bookstore.MixProject do
 
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4"},
-      {:ecto_psql_extras, "~> 0.7.15"}
+      {:ecto_psql_extras, "~> 0.7.15"},
+      {:csv, "~> 3.2"}
     ]
   end
 
