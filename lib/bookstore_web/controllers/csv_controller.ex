@@ -13,13 +13,13 @@ defmodule BookstoreWeb.CsvController do
   defp csv_content do
     books = Books.list_books()
     books
-    |> Stream.map(&[&1.id, &1.title, &1.isbn, &1.publication_date, &1.price, &1.quantity, &1.editorial, my_authors(&1.authors)])
+    |> Stream.map(&[&1.id, &1.title, &1.isbn, &1.publication_date, &1.price, &1.quantity, &1.editorial, get_author_names(&1.authors)])
     |> CSV.encode()
     |> Enum.to_list
     |> to_string
   end
 
-  defp my_authors(values) do
-    Enum.map_join(values, ", ", &(&1.full_name))
+  defp get_author_names(authors) do
+    Enum.map_join(authors, ", ", &(&1.full_name))
   end
 end
