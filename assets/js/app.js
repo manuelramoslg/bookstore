@@ -42,3 +42,17 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+const dfLayerOptions = {
+  installationId: 'c6c44496-b2bf-4b33-b632-315f8a02bf39',
+  zone: 'eu1'
+};
+
+
+
+(function (l, a, y, e, r, s) {
+  r = l.createElement(a); r.onload = e; r.async = 1; r.src = y;
+  s = l.getElementsByTagName(a)[0]; s.parentNode.insertBefore(r, s);
+})(document, 'script', 'https://cdn.doofinder.com/livelayer/1/js/loader.min.js', function () {
+  doofinderLoader.load(dfLayerOptions);
+});
+

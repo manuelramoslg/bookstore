@@ -121,4 +121,16 @@ defmodule Bookstore.Books do
   def list_authors_by_id(author_ids) do
     Repo.all(from a in Author, where: a.id in ^author_ids)
   end
+
+  def get_author_id_where_name(search_term) do
+    search_term = "%#{search_term}%"
+
+    query =
+      from(
+        a in Author,
+        where: ilike(a.full_name, ^search_term)
+      )
+
+    Enum.map(Repo.all(query), &(&1.id))
+  end
 end
