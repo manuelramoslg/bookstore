@@ -20,7 +20,7 @@ defmodule BookstoreWeb.Router do
   scope "/", BookstoreWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
     get "/books/csv", CsvController, :export
     resources "/authors", AuthorController
     resources "/categories", CategoryController
@@ -80,6 +80,7 @@ defmodule BookstoreWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
 
+    live "/", BookLive.Index, :index
     live "/books", BookLive.Index, :index
     live "/books/new", BookLive.Index, :new
     live "/books/:id/edit", BookLive.Index, :edit

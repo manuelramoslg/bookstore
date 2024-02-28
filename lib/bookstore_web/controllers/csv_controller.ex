@@ -22,7 +22,9 @@ defmodule BookstoreWeb.CsvController do
           &1.price,
           &1.quantity,
           &1.editorial,
-          get_author_names(&1.authors)
+          get_author_names(&1.authors),
+          &1.image,
+          get_book_link(&1.id)
         ]
       )
     headers = [
@@ -33,7 +35,9 @@ defmodule BookstoreWeb.CsvController do
       "price",
       "quantity",
       "editorial",
-      "authors"
+      "authors",
+      "image",
+      "link"
     ]
     [headers | books]
     |> CSV.encode()
@@ -43,5 +47,9 @@ defmodule BookstoreWeb.CsvController do
 
   defp get_author_names(authors) do
     Enum.map_join(authors, ", ", &(&1.full_name))
+  end
+
+  defp get_book_link(id) do
+    "https://lightly-improved-airedale.ngrok-free.app/books/" <> "#{id}"
   end
 end
