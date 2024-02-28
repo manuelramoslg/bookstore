@@ -11,9 +11,31 @@ defmodule BookstoreWeb.CsvController do
   end
 
   defp csv_content do
-    books = Books.list_books()
-    books
-    |> Stream.map(&[&1.id, &1.title, &1.isbn, &1.publication_date, &1.price, &1.quantity, &1.editorial, get_author_names(&1.authors)])
+    books =
+      Books.list_books()
+      |> Enum.map(
+        &[
+          &1.id,
+          &1.title,
+          &1.isbn,
+          &1.publication_date,
+          &1.price,
+          &1.quantity,
+          &1.editorial,
+          get_author_names(&1.authors)
+        ]
+      )
+    headers = [
+      "id",
+      "title",
+      "isbn",
+      "publication_date",
+      "price",
+      "quantity",
+      "editorial",
+      "authors"
+    ]
+    [headers | books]
     |> CSV.encode()
     |> Enum.to_list
     |> to_string
